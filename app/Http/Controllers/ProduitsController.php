@@ -14,8 +14,8 @@ class ProduitsController extends Controller
      */
     public function index()
     {
-        //
-       // return view('produits.create');
+        $produits = Produits::all();
+        return view('produits.index',compact('produits'));
 
     }
 
@@ -33,7 +33,7 @@ class ProduitsController extends Controller
      */
     public function store(StoreProduitsRequest $request)
     {
-        $validated = $request->Validate([
+        $validated =$request->Validate([
            'prix'=>'required',
            'poids'=>'required',
            'status'=>'required',
@@ -42,7 +42,7 @@ class ProduitsController extends Controller
 
         ]);
         Produits::create($validated);
-        return redirect()->route('produits.create')->with('status','UN POULET EST AJOUTE AVEC SUCCES!');
+        return redirect()->route('produits.index')->with('success','UN POULET EST AJOUTE AVEC SUCCES!');
 
     }
 

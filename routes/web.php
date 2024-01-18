@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('accueil', function () {
-    return view('produits.accueil');
-});
+// Route::get('accueil', function () {
+//     return view('produits.accueil');
+// });
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
