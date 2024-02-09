@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::middleware('auth')->group(function () {
     Route::prefix('admin')->group(function(){
-        Route::resource('produits', ProduitsController::class)->names('produits');
+        Route::resource("produits", ProduitsController::class)->names('produits');
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::resource('clients', ClientsController::class)->names('clients');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

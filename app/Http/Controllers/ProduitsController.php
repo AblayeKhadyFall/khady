@@ -33,14 +33,18 @@ class ProduitsController extends Controller
      */
     public function store(StoreProduitsRequest $request)
     {
-        $validated =$request->Validate([
-           'prix'=>'required',
-           'poids'=>'required',
-           'status'=>'required',
-           'image'=>'required'
+        // $validated =$request->Validate([
+        //    'prix'=>'required',
+        //    'poids'=>'required',
+        //    'status'=>'required',
+        //    'image'=>'required'
 
 
-        ]);
+        // ]);
+
+        $validated = $request->validated();
+
+        //dd($validated);
         Produits::create($validated);
         return redirect()->route('produits.index')->with('success','UN POULET EST AJOUTE AVEC SUCCES!');
 
@@ -59,7 +63,8 @@ class ProduitsController extends Controller
      */
     public function edit(Produits $produits)
     {
-        //
+        //$produits = Produits::all();
+        return view('produits.edit',compact('produits'));
     }
 
     /**
@@ -67,14 +72,21 @@ class ProduitsController extends Controller
      */
     public function update(UpdateProduitsRequest $request, Produits $produits)
     {
-        //
+        $validated = $request->validate();
+        $produits->update($validated);
+        return redirect()->route('produits.index')->with('success','Ce produit a ete modifier avec succes !');
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Produits $produits)
+
     {
-        //
+        // $produits = $produits->produits ;
+        // dd($produits);
+
+        $produits->delete();
+        return redirect()->route('produits.index')->with('success','Ce produit a ete supprime avec succes !');
     }
 }

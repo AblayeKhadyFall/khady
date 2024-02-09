@@ -11,6 +11,11 @@
     </div>
 
 @endif
+@if (Session::has('failed'))
+        <div class="alert alert-danger">
+            {{ Session::get('failed') }}
+        </div>
+    @endif
 <table class="table table-striped">
     <thead>
       <tr>
@@ -23,17 +28,17 @@
       </tr>
     </thead>
     <tbody>
-        @foreach ($produits as $produit)
+        @foreach ($produits as $produits)
         <tr>
-            <th scope="row">{{$produit->id}}</th>
-            <td>{{$produit->prix}}</td>
-            <td>{{$produit->poids}}</td>
-            <td>{{$produit->image}}</td>
+            <th scope="row">{{$produits->id}}</th>
+            <td>{{$produits->prix}}</td>
+            <td>{{$produits->poids}}</td>
+            <td><img src="{{$produits->image}}"width="50" height="50" alt=""></td>
             <td>
-                <a class="btn btn-dark btn-sm" href="{{route("produits.edit",$produit->id)}}">UPDATE</a>
-                <form action="{{route('produit.destroy',$produit->id)}}"method="post"class="d-inline">
+                <a class="btn btn-dark btn-sm" href="{{route("produits.edit", $produits->id)}}">UPDATE</a>
+                <form action="{{route("produits.destroy", $produits->id)}}" method="post">
                     @csrf
-                    @method('delete')
+                    @method('DELETE')
                     <button class="btn btn-primary btn-sm" type="submit" onclick="return confirm('Voulez vous vraiment supprimer ce produit pertinant')">DELETE</button>
                 </form>
             </td>

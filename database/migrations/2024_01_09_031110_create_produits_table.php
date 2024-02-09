@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('produits', function (Blueprint $table) {
             $table->id();
-            $table->integer('prix');
-            $table->integer('poids');
-            $table->integer('status')->default(true);
-            $table->string('image')->default('default.png');
+            $table->integer('prix')->nullable();
+            $table->string('poids');
+            $table->boolean('status')->default(true);
+            $table->longText('image')->default('default.png');
             $table->timestamps();
         });
     }
