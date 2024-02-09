@@ -28,15 +28,15 @@
       </tr>
     </thead>
     <tbody>
-        @foreach ($produits as $produits)
+        @foreach ($produits as $produit)
         <tr>
-            <th scope="row">{{$produits->id}}</th>
-            <td>{{$produits->prix}}</td>
-            <td>{{$produits->poids}}</td>
-            <td><img src="{{$produits->image}}"width="50" height="50" alt=""></td>
+            <th scope="row">{{$produit->id}}</th>
+            <td>{{$produit->prix}}</td>
+            <td>{{$produit->poids}}</td>
+            <td><img src="{{$produit->image}}"width="50" height="50" alt=""></td>
             <td>
-                <a class="btn btn-dark btn-sm" href="{{route("produits.edit", $produits->id)}}">UPDATE</a>
-                <form action="{{route("produits.destroy", $produits->id)}}" method="post">
+                <a class="btn btn-dark btn-sm" href="{{route("produits.edit", $produit->id)}}">UPDATE</a>
+                <form action="{{route("produits.destroy", $produit->id)}}" method="post">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-primary btn-sm" type="submit" onclick="return confirm('Voulez vous vraiment supprimer ce produit pertinant')">DELETE</button>

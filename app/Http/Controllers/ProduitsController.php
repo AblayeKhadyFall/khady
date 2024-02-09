@@ -6,6 +6,7 @@ use App\Models\Produits;
 use App\Http\Requests\StoreProduitsRequest;
 use App\Http\Requests\UpdateProduitsRequest;
 use Illuminate\Auth\Events\Validated;
+use Illuminate\Http\Request;
 
 class ProduitsController extends Controller
 {
@@ -61,32 +62,58 @@ class ProduitsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Produits $produits)
+    public function edit($id)
     {
-        //$produits = Produits::all();
-        return view('produits.edit',compact('produits'));
+        $produit = Produits::find($id);
+        return view('produits.edit',compact('produit'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProduitsRequest $request, Produits $produits)
+    public function updatec(UpdateProduitsRequest $request, Produits $produits)
     {
         $validated = $request->validate();
         $produits->update($validated);
         return redirect()->route('produits.index')->with('success','Ce produit a ete modifier avec succes !');
     }
+    public function update(Request $request, $id)
+    {
+        // Valider les données reçues du formulaire
+        $request->validate([
+            'prix' => 'required|numeric',
+            'poids' => 'required',
+            'status' => 'required|integer',
+            'image' => 'required|string',
+        ]);
+
+        // Trouver le produit à mettre à jour dans la base de données
+        $produit = Produits::findOrFail($id);
+
+        // Mettre à jour les champs du produit avec les données du formulaire
+        $produit->prix = $request->input('prix');
+        $produit->poids = $request->input('poids');
+        $produit->status = $request->input('status');
+        $produit->image = $request->input('image');
+
+        // Sauvegarder les modifications apportées au produit
+        $produit->save();
+
+        // Rediriger vers la page des produits avec un message de succès
+        return redirect()->route('produits.index')->with('success', 'Produit mis à jour avec succès');
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Produits $produits)
+    public function destroy($id)
 
     {
         // $produits = $produits->produits ;
         // dd($produits);
+        $produit = Produits::findOrFail($id);
 
-        $produits->delete();
+        $produit->delete();
         return redirect()->route('produits.index')->with('success','Ce produit a ete supprime avec succes !');
     }
 }
